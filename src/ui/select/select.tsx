@@ -1,28 +1,41 @@
 "use client";
 
 import {useEffect, useRef, useState} from "react";
+import {primitive} from "../../types/primitive.ts";
 import CheckIcon from "./_icons/checkIcon.tsx";
 import DropIcon from "./_icons/dropIcon.tsx";
 
 
 interface Option {
   text: string;
-  value: string | number|boolean;
+  value: primitive;
 }
 
 interface SelectProps {
   options: Option[];
-  handleOptionChange?: (value: string|number|boolean) => void;
+  handleOptionChange?: (value: primitive) => void;
   label?: string;
+  initOptionValue?: primitive;
 }
 
 /**
  * 셀렉트박스
  */
-const Select = ({ options, handleOptionChange,label }: SelectProps) => {
+const Select = ({ options, handleOptionChange,label,initOptionValue }: SelectProps) => {
   const [isClicked, setIsClicked] = useState(false);
   const [selectedOption, setSelectedOption] = useState<Option>(options[0]);
   const ref = useRef<HTMLDivElement | null>(null);
+
+
+  useEffect(() => {
+    if(initOptionValue){
+        const option = options.find((option) => option.value === initOptionValue);
+        if(option){
+            setSelectedOption(option);
+        }
+    }
+  }, [initOptionValue]);
+
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
