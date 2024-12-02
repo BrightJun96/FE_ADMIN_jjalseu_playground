@@ -1,13 +1,13 @@
 import {useCallback, useState} from 'react';
 import {SortColumn} from "react-data-grid";
-import {isArrayEmpty} from "../../../helper/arrayUtils.ts";
+import {ArrayUtils} from "../../../helper/class/ArrayUtils.ts";
 
 function useSortColumn(handleSortChange?: (sortColumns: SortColumn[]) => void) {
 
     const [sortColumns, setSortColumns] = useState<SortColumn[]>([]);
 
     const onSortColumnsChange = useCallback((sortColumns: SortColumn[]) => {
-        if(isArrayEmpty(sortColumns)) return
+        if(ArrayUtils.isEmpty<SortColumn>(sortColumns)) return
 
         if (handleSortChange) {
             handleSortChange(sortColumns);
