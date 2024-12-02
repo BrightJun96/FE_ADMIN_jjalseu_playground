@@ -2,7 +2,6 @@ import BaseApi from "../BaseApi.ts";
 import {IResponse} from "../network.types.ts";
 import {QuizForm, QuizItem, QuizListRequest} from "./types.ts";
 
-
 // 퀴즈 API 추상화 인터페이스
 export interface AbstractQuizApi{
     // 목록
@@ -21,9 +20,12 @@ export interface AbstractQuizApi{
     deleteQuiz(id:number):  Promise<IResponse<null>>;
 }
 
-
 // 퀴즈 API
 class QuizApi extends BaseApi implements AbstractQuizApi{
+
+    constructor() {
+        super(process.env.REACT_APP_API_ENDPOINT!); // BaseApi에 API 엔드포인트 전달
+    }
     // 목록
     async getQuizList(request?:QuizListRequest): Promise<IResponse<QuizItem[]>>{
         return this.request<QuizItem[]>("quiz", {
@@ -65,4 +67,6 @@ class QuizApi extends BaseApi implements AbstractQuizApi{
 
 }
 
-export default QuizApi;
+const quizApi = new QuizApi();
+
+export default quizApi;
