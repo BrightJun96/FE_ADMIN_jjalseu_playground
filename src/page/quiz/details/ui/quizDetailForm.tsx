@@ -1,39 +1,37 @@
-import {useEffect, useState} from "react";
-import {useQueryQuizDetail} from "../../../../service/quiz/query.ts";
-import {QuizForm, QuizFormKey} from "../../../../service/quiz/types.ts";
-import {primitive} from "../../../../types/primitive.ts";
-import TextInput from "../../../../ui/input/textInput.tsx";
-import Select from "../../../../ui/select/select.tsx";
-import TextEditor from "../../../../ui/textEditor/textEditor.tsx";
-import FIELD_OPTIONS from "../constant/FieldOptions.ts";
-import initialQuizForm from "../constant/InitQuizForm.ts";
-import LANGUAGE_OPTIONS from "../constant/LanguageOptions.ts";
-import LEVEL_OPTIONS from "../constant/LevelOptions.ts";
-import TYPE_OPTIONS from "../constant/TypeOptions.ts";
-import MetaDataForm from "./metaDataForm.tsx";
-import MultipleChoiceForm from "./multipleChoiceForm.tsx";
+import {useEffect} from "react";
+import {useMutationDeleteQuiz, useMutationUpdateQuiz, useQueryQuizDetail} from "../../../../service/quiz/query.ts";
+import PrimaryButton from "../../../../ui/button/primaryButton.tsx";
+import QuizForm from "../../ui/quizForm.tsx";
+import useQuizForm from "../../useQuizForm.ts"
 
 // 퀴즈 상세 폼
 function QuizDetailForm({quizId}:{quizId:number}) {
 
     const {data} = useQueryQuizDetail(quizId)
+    const {setQuizForm,quizForm} = useQuizForm()
+    const {mutate:update}= useMutationUpdateQuiz()
+    const {mutate:remove}= useMutationDeleteQuiz()
 
-    // 퀴즈 폼 상태
-    const [quizForm,setQuizForm]=useState<QuizForm>(initialQuizForm);
+    // 퀴즈 수정
+    function updateQuiz(){
 
-
-    // onChange 함수
-    function commonHandleChange( value:primitive|primitive[],key:QuizFormKey) {
-        setQuizForm((prev)=>({...prev,[key]:value}))
+        update({id:quizId,request:quizForm})
     }
 
-    console.log("data :",data)
+    // 퀴즈 삭제
+    function removeQuiz(){
+        remove(quizId)
+
+    }
+
+
     useEffect(() => {
         if(data){
-            const {level,title,content,multipleChoiceAnswer,subjectiveAnswer,type,hint,explanation,field,lang,time,metaTitle,metaDescription,metaImageUrl} =data.data
+            const {title,content,multipleChoices,multipleChoiceAnswer,subjectiveAnswer,type,hint,explanation,field,lang,time,metaTitle,metaDescription,metaImageUrl,detailUrl} =data.data
             setQuizForm(prev => ({...prev,
                 title,
                 content,
+                multipleChoices:multipleChoices.map(({content}) => content),
                 multipleChoiceAnswer ,
                 subjectiveAnswer,
                 type,
@@ -45,86 +43,32 @@ function QuizDetailForm({quizId}:{quizId:number}) {
                 metaTitle,
                 metaDescription,
                 metaImageUrl:metaImageUrl??"",
-
+                detailUrl
             }))
         }
     }, [data]);
 
+
+
     return (
-        <form className={"w-full"}>
-            <TextInput
-                value={quizForm.title}
-                label={"퀴즈 제목"}
-                placeholder={"제목을 입력하세요"}
-                onChange={(value) => commonHandleChange(value,"title") }
-            />
-            {/*퀴즈 내용 (텍스트 에디터)*/}
-            <TextEditor
-                value={quizForm.content}
-                label={"퀴즈 내용"}
-                onHTMLChange={(value)=> commonHandleChange(value,"content") }
-            />
-            {/*힌트 (텍스트 에디터)*/}
-            <TextEditor
-                value={quizForm.hint}
-                label={"힌트"}
-                onHTMLChange={(value)=> commonHandleChange(value,"hint")}
-            />
-            {/*해설 (텍스트 에디터)*/}
-            <TextEditor
-                value={quizForm.explanation}
-                label={"해설"}
-                onHTMLChange={(value)=> commonHandleChange(value,"explanation")}
-            />
-            {/*분야*/}
-            <Select
-                options={FIELD_OPTIONS}
-                label={"분야"}
-                handleOptionChange={(value) => commonHandleChange(value,"field")}
-            />
-            {/*언어*/}
-            <Select
-                options={LANGUAGE_OPTIONS}
-                label={"언어"}
-                handleOptionChange={(value) => commonHandleChange(value,"lang")}
-            />
-            {/*문제 난이도*/}
-            <Select
-                options={LEVEL_OPTIONS}
-                label={"문제 난이도"}
-                handleOptionChange={(value) => commonHandleChange(value,"level")}
-            />
-            {/*문제 타입(객관식 or 주관식)*/}
-            <Select
-                options={TYPE_OPTIONS}
-                label={"문제타입"}
-                handleOptionChange={(value)=>commonHandleChange(value,"type")}
-
-            />
-            {/*상세 URL*/}
-            <TextInput
-                value={quizForm.detailUrl}
-                label={"상세 URL"}
-                className={"w-full"}
-                placeholder={"상세 URL을 입력해주세요."}
-                onChange={(value)=>commonHandleChange(value,"detailUrl")}
-            />
-
-            {/*객관식 폼*/}
-            {quizForm.type==="MULTIPLE_CHOICE"&&
-                <MultipleChoiceForm quizForm={quizForm} commonHandleChange={commonHandleChange}/>
-            }
-
-            {/*메타데이터 섹션(제목,설명,이미지 URL)*/}
-            <MetaDataForm
-                metaData={{
-                    metaTitle:quizForm.metaTitle,
-                    metaDescription:quizForm.metaDescription,
-                    metaImageUrl:quizForm.metaImageUrl,
-                    commonHandleChange
-                }}
-            />
-        </form>
+        <QuizForm
+            onSubmit={updateQuiz}
+        >
+            <PrimaryButton
+                type={"submit"}
+                color={"primary"}
+                onClick={updateQuiz}
+            >
+                수정
+            </PrimaryButton>
+            <PrimaryButton
+                type={"button"}
+                color={"primarySecondary"}
+                onClick={removeQuiz}
+            >
+                삭제
+            </PrimaryButton>
+        </QuizForm>
     );
 }
 

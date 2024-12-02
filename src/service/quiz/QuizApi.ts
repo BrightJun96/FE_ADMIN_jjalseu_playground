@@ -1,6 +1,6 @@
 import BaseApi from "../BaseApi.ts";
 import {IResponse} from "../network.types.ts";
-import {QuizForm, QuizItem, QuizListRequest} from "./types.ts";
+import {IQuizForm, QuizItem, QuizListRequest} from "./types.ts";
 
 // 퀴즈 API 추상화 인터페이스
 export interface AbstractQuizApi{
@@ -11,10 +11,10 @@ export interface AbstractQuizApi{
     getQuizDetail(id:number): Promise<IResponse<QuizItem>>;
 
     // 등록
-    addQuiz(request:QuizForm): Promise<IResponse<null>>;
+    addQuiz(request:IQuizForm): Promise<IResponse<null>>;
 
     // 수정
-    updateQuiz(id:number,request:QuizForm): Promise<IResponse<null>>;
+    updateQuiz(id:number,request:IQuizForm): Promise<IResponse<null>>;
 
     // 삭제
     deleteQuiz(id:number):  Promise<IResponse<null>>;
@@ -42,15 +42,15 @@ class QuizApi extends BaseApi implements AbstractQuizApi{
     }
 
     // 등록
-    addQuiz(request: QuizForm): Promise<IResponse<null>> {
-        return this.request<null>("quiz", {
+    addQuiz(request: IQuizForm): Promise<IResponse<null>> {
+        return this.request<null>("quiz/register", {
             method: "POST",
             body: JSON.stringify(request)
         })
     }
 
     // 수정
-    updateQuiz(id: number, request: QuizForm): Promise<IResponse<null>> {
+    updateQuiz(id: number, request: IQuizForm): Promise<IResponse<null>> {
         return this.request<null>(`quiz/${id}`, {
             method: "PATCH",
             body: JSON.stringify(request)
