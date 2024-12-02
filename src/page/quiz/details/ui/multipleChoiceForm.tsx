@@ -1,4 +1,4 @@
-import {QuizForm, QuizFormKey} from "../../../../service/quiz/types.ts";
+import {IQuizForm, QuizFormKey} from "../../../../service/quiz/types.ts";
 import {primitive} from "../../../../types/primitive.ts";
 import GroupCheckBox from "../../../../ui/checkbox/groupCheckBox.tsx";
 import Select from "../../../../ui/select/select.tsx";
@@ -10,7 +10,7 @@ import MultipleChoiceContents from "./multipleChoiceContents.tsx";
  * 객관식 폼
  */
 function MultipleChoiceForm({quizForm,commonHandleChange}:{
-    quizForm:QuizForm,
+    quizForm:IQuizForm,
     commonHandleChange: (value: primitive|primitive[], key: QuizFormKey) => void
 }) {
 

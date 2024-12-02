@@ -1,5 +1,6 @@
 import {useEffect} from "react";
 import {useNavigate, useParams} from "react-router-dom";
+import QuizFormProvider from "../../../provider/quizFormProvider.tsx";
 import Title from "../../../ui/title/Title.tsx";
 import QuizDetailForm from "./ui/quizDetailForm.tsx";
 
@@ -27,7 +28,9 @@ function QuizDetailsPage() {
             {/*
             @todo id가 string으로 들어오면 에러나니 처리 ㄱㄱ
             */}
-            {id && <QuizDetailForm quizId={Number(id)}/>}
+            <QuizFormProvider>
+                {id && <QuizDetailForm quizId={Number(id)}/>}
+            </QuizFormProvider>
         </div>
     );
 }

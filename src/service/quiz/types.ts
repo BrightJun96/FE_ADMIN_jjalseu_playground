@@ -40,7 +40,7 @@ export interface QuizItem {
 
 
 // 퀴즈 요청 타입 & 퀴즈 폼 타입
-export interface QuizForm{
+export interface IQuizForm{
     title:string, // 퀴즈 제목
     content:string, // 퀴즈 내용
     subjectiveAnswer:string, // 주관식 답안
@@ -62,4 +62,4 @@ export interface QuizForm{
 
 
 // QuizForm keys
-export type QuizFormKey = keyof QuizForm;
+export type QuizFormKey = keyof IQuizForm;
