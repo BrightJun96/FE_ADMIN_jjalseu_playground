@@ -10,7 +10,7 @@ function QuizListPage() {
     console.log("quizList :",quizList)
 
     return (
-        <div >
+        <div className={"w-full"}>
             <CustomTable columns={quizListTableColumn} rows={quizList?.data?.quizList??[]}/>
 
         </div>
