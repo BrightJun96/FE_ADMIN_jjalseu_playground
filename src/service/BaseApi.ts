@@ -25,6 +25,7 @@ abstract class BaseApi{
                 : endpoint;
 
             const response = await fetch(`${this.baseUrl}/${processedEndpoint}`, {
+                credentials: "include",
                 headers
                 , ...options
             });
