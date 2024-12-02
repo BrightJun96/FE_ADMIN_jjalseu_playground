@@ -1,5 +1,5 @@
 
-export type QueryString = string | URLSearchParams | Record<string, string> | string[][];
+export type QueryString= string | URLSearchParams | Record<string, string> | string[][];
 
 export interface CustomRequestInit extends RequestInit {
     queryString?: QueryString;

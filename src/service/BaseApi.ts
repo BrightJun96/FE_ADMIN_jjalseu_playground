@@ -11,7 +11,7 @@ abstract class BaseApi{
         this.baseUrl = baseUrl;
     }
 
-    protected async request<T=unknown>(endpoint: string, options?: CustomRequestInit):Promise<IResponse<T>>{
+    protected async request<T=unknown,>(endpoint: string, options?: CustomRequestInit):Promise<IResponse<T>>{
 
         try {
             const headers = {
