@@ -6,8 +6,7 @@ import QuizRegisterPage from "../page/quiz/register/quizRegisterPage.tsx";
 
 const router = createBrowserRouter([
     {
-        path: "/",
-        element: <div>Hello world!</div>,
+
         // 퀴즈
         children:[
             {
