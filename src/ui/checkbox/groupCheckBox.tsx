@@ -17,7 +17,8 @@ interface GroupCheckBoxProps {
     onChange:(value:primitive[])=>void;// 체크박스 그룹 변경 핸들러
     label?:string; //  라벨
     className?:string;
-    isMultiSelect?:boolean; // 다중 선택 가능 여부
+    isMultiSelect?:boolean; // 다중 선택 가능 여부,
+    initCheckedList?:primitive[]; // 초기 체크된 리스트
 
 }
 
@@ -28,7 +29,8 @@ function GroupCheckBox({
                             options,
                             onChange,
                             label,
-                           isMultiSelect=true // 기본 다중 선택 가능
+                           isMultiSelect=true, // 기본 다중 선택 가능,
+                            initCheckedList=[],
 
                        }:GroupCheckBoxProps) {
 
@@ -54,6 +56,13 @@ function GroupCheckBox({
             setCheckedList(prev => prev.filter(v=>v!==value.value))
         }
     }
+
+    useEffect(() => {
+
+        if(initCheckedList.length>0){
+            setCheckedList(initCheckedList)
+        }
+    }, [initCheckedList]);
 
     useEffect(() => {
         onChange(checkedList)

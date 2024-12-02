@@ -36,7 +36,7 @@ function MultipleChoiceForm({quizForm,commonHandleChange}:{
 
                 <MultipleChoiceContents
                     quizForm={quizForm}
-                    onChange={(value)=>commonHandleChange(value,"multipleChoiceContents")}
+                    onChange={(value)=>commonHandleChange(value,"multipleChoices")}
 
                 />
             {/*객관실일 경우, 나타날 필드(객관식 답안)*/}
@@ -44,6 +44,7 @@ function MultipleChoiceForm({quizForm,commonHandleChange}:{
                     className={"!px-2"}
                     label={"객관식 답안"}
                     options={checkBoxOptions}
+                    initCheckedList={quizForm.multipleChoiceAnswer}
                     direction={"col"}
                     onChange={(checkedList)=>commonHandleChange(checkedList,"multipleChoiceAnswer")}
                 />
