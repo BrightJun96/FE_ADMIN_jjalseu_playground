@@ -53,7 +53,7 @@ export interface QuizForm{
     level:number, // 난이도
     isMultiple:boolean,// 객관식일 경우 중복 선택 여부
     time:number, // 시간
-    multipleChoiceContents:string[] //객관식 컨텐츠
+    multipleChoices:string[] //객관식 컨텐츠
     metaTitle:string, // 제목
     metaDescription:string, // 설명
     metaImageUrl:string // 이미지 URL

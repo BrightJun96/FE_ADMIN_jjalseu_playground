@@ -17,7 +17,7 @@ const initialQuizForm:QuizForm={
     level:1,
     isMultiple:false,
     time:0,
-    multipleChoiceContents:["","","","",""], // 객관식 선택지
+    multipleChoices:["","","","",""], // 객관식 선택지
     // 메타데이터
     metaTitle:"", // 제목
     metaDescription:"", // 설명

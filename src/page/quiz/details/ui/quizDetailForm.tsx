@@ -30,10 +30,11 @@ function QuizDetailForm({quizId}:{quizId:number}) {
     console.log("data :",data)
     useEffect(() => {
         if(data){
-            const {level,title,content,multipleChoiceAnswer,subjectiveAnswer,type,hint,explanation,field,lang,time,metaTitle,metaDescription,metaImageUrl} =data.data
+            const {level,title,content,multipleChoices,multipleChoiceAnswer,subjectiveAnswer,type,hint,explanation,field,lang,time,metaTitle,metaDescription,metaImageUrl,detailUrl} =data.data
             setQuizForm(prev => ({...prev,
                 title,
                 content,
+                multipleChoices:multipleChoices.map(({content}) => content),
                 multipleChoiceAnswer ,
                 subjectiveAnswer,
                 type,
@@ -45,7 +46,7 @@ function QuizDetailForm({quizId}:{quizId:number}) {
                 metaTitle,
                 metaDescription,
                 metaImageUrl:metaImageUrl??"",
-
+                detailUrl
             }))
         }
     }, [data]);
