@@ -5,7 +5,7 @@ import {QuizForm, QuizItem, QuizListRequest} from "./types.ts";
 // 퀴즈 API 추상화 인터페이스
 export interface AbstractQuizApi{
     // 목록
-    getQuizList(request:QuizListRequest): Promise<IResponse<QuizItem[]>>;
+    getQuizList(request:QuizListRequest): Promise<IResponse<{quizList: QuizItem[] }>>;
 
     // // 상세
     getQuizDetail(id:number): Promise<IResponse<QuizItem>>;
@@ -27,7 +27,7 @@ class QuizApi extends BaseApi implements AbstractQuizApi{
         super(import.meta.env.VITE_API_ENDPOINT!); // BaseApi에 API 엔드포인트 전달
     }
     // 목록
-    async getQuizList(request?:QuizListRequest): Promise<IResponse<QuizItem[]>>{
+    async getQuizList(request?:QuizListRequest): Promise<IResponse<{quizList: QuizItem[] }>>{
         return this.request<QuizItem[]>("quiz/list", {
             method: "GET",
             queryString: request
