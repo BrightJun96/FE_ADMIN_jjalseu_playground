@@ -1,17 +1,29 @@
+import {CellClickArgs} from "react-data-grid";
+import {useNavigate} from "react-router-dom";
 import {useQueryQuizList} from "../../../service/quiz/query.ts";
-import CustomTable from "../../../ui/table/customTable.tsx";
+import CustomTable, {TableRow} from "../../../ui/table/customTable.tsx";
+import Title from "../../../ui/title/Title.tsx";
 import quizListTableColumn from "./constant/quizListTableColumn.ts";
 
 // 퀴즈 목록 페이지
 function QuizListPage() {
 
     const {data:quizList} = useQueryQuizList()
+    const navigate = useNavigate()
 
-    console.log("quizList :",quizList)
+    function handleCellClick(params:CellClickArgs<TableRow>){
+        navigate(`/quiz/${params.row.quizId}`)
+    }
 
     return (
         <div className={"w-full"}>
-            <CustomTable columns={quizListTableColumn} rows={quizList?.data?.quizList??[]}/>
+            <Title>퀴즈 목록</Title>
+            <CustomTable
+                columns={quizListTableColumn}
+                rows={quizList?.data?.quizList??[]}
+                handleCellClick={handleCellClick}
+
+            />
 
         </div>
     );
