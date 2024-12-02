@@ -59,3 +59,7 @@ export interface QuizForm{
     metaImageUrl:string // 이미지 URL
     detailUrl:string // 상세 URL
 }
+
+
+// QuizForm keys
+export type QuizFormKey = keyof QuizForm;
