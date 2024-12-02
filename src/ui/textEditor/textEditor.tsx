@@ -33,6 +33,7 @@ const editorRef = React.useRef<Editor|null>(null);
         <div>
             <span className={"text-title3Normal"}>{label}</span>
             <Editor
+                initialValue={" "}
                 onChange={() => {
                    const   html:string =editorRef.current?.getInstance().getHTML()
 

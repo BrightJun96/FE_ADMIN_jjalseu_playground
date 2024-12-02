@@ -43,7 +43,7 @@ class QuizApi extends BaseApi implements AbstractQuizApi{
 
     // 등록
     addQuiz(request: QuizForm): Promise<IResponse<null>> {
-        return this.request<null>("quiz", {
+        return this.request<null>("quiz/register", {
             method: "POST",
             body: JSON.stringify(request)
         })

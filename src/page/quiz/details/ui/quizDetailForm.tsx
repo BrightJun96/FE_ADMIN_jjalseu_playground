@@ -1,5 +1,5 @@
 import {useEffect} from "react";
-import {useQueryQuizDetail} from "../../../../service/quiz/query.ts";
+import {useMutationUpdateQuiz, useQueryQuizDetail} from "../../../../service/quiz/query.ts";
 import PrimaryButton from "../../../../ui/button/primaryButton.tsx";
 import QuizForm from "../../ui/quizForm.tsx";
 import useQuizForm from "../../useQuizForm.ts"
@@ -8,9 +8,14 @@ import useQuizForm from "../../useQuizForm.ts"
 function QuizDetailForm({quizId}:{quizId:number}) {
 
     const {data} = useQueryQuizDetail(quizId)
-    const {setQuizForm} = useQuizForm()
+    const {setQuizForm,quizForm} = useQuizForm()
+   const {mutate:update}= useMutationUpdateQuiz()
 
 
+    function updateQuiz(){
+
+        update({id:quizId,request:quizForm})
+    }
 
     useEffect(() => {
         if(data){
@@ -35,9 +40,15 @@ function QuizDetailForm({quizId}:{quizId:number}) {
         }
     }, [data]);
 
+
+
     return (
-        <QuizForm>
-            <PrimaryButton color={"primary"}>
+        <QuizForm
+            onSubmit={updateQuiz}
+        >
+            <PrimaryButton
+                type={"submit"}
+                color={"primary"}>
                 수정
             </PrimaryButton>
         </QuizForm>

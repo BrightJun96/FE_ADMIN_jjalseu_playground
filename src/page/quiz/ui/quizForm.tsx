@@ -9,14 +9,23 @@ import MetaDataForm from "../details/ui/metaDataForm.tsx";
 import MultipleChoiceForm from "../details/ui/multipleChoiceForm.tsx";
 import useQuizForm from "../useQuizForm.ts"
 
-function QuizForm({children}:{
-    children:React.ReactNode
+function QuizForm({children,onSubmit}:{
+    children:React.ReactNode,
+    onSubmit:()=>void
 }) {
 
-const {quizForm,commonHandleChange} = useQuizForm()
+    const {quizForm,commonHandleChange} = useQuizForm()
+
+    function handleSubmit(e:React.FormEvent<HTMLFormElement>){
+        e.preventDefault()
+        onSubmit()
+    }
 
     return (
-        <form className={"w-full"}>
+        <form
+            className={"w-full"}
+            onSubmit={handleSubmit}
+        >
             <TextInput
                 value={quizForm.title}
                 label={"퀴즈 제목"}
@@ -75,6 +84,15 @@ const {quizForm,commonHandleChange} = useQuizForm()
                 onChange={(value) => commonHandleChange(value, "detailUrl")}
             />
 
+            {/*문제풀이 소요시간*/}
+            <TextInput
+                value={quizForm.time}
+                type={"number"}
+                label={"문제풀이 소요시간(초)"}
+                className={"w-full"}
+                placeholder={"문제풀이 소요시간을 입력해주세요."}
+                onChange={(value)=>commonHandleChange(value,"time")}
+            />
             {/*객관식 폼*/}
             {quizForm.type === "MULTIPLE_CHOICE" &&
                 <MultipleChoiceForm quizForm={quizForm} commonHandleChange={commonHandleChange}/>
