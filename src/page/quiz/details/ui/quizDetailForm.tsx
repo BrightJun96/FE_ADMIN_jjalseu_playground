@@ -1,5 +1,5 @@
 import {useEffect} from "react";
-import {useMutationUpdateQuiz, useQueryQuizDetail} from "../../../../service/quiz/query.ts";
+import {useMutationDeleteQuiz, useMutationUpdateQuiz, useQueryQuizDetail} from "../../../../service/quiz/query.ts";
 import PrimaryButton from "../../../../ui/button/primaryButton.tsx";
 import QuizForm from "../../ui/quizForm.tsx";
 import useQuizForm from "../../useQuizForm.ts"
@@ -9,13 +9,21 @@ function QuizDetailForm({quizId}:{quizId:number}) {
 
     const {data} = useQueryQuizDetail(quizId)
     const {setQuizForm,quizForm} = useQuizForm()
-   const {mutate:update}= useMutationUpdateQuiz()
+    const {mutate:update}= useMutationUpdateQuiz()
+    const {mutate:remove}= useMutationDeleteQuiz()
 
-
+    // 퀴즈 수정
     function updateQuiz(){
 
         update({id:quizId,request:quizForm})
     }
+
+    // 퀴즈 삭제
+    function removeQuiz(){
+        remove(quizId)
+
+    }
+
 
     useEffect(() => {
         if(data){
@@ -48,8 +56,17 @@ function QuizDetailForm({quizId}:{quizId:number}) {
         >
             <PrimaryButton
                 type={"submit"}
-                color={"primary"}>
+                color={"primary"}
+                onClick={updateQuiz}
+            >
                 수정
+            </PrimaryButton>
+            <PrimaryButton
+                type={"button"}
+                color={"primarySecondary"}
+                onClick={removeQuiz}
+            >
+                삭제
             </PrimaryButton>
         </QuizForm>
     );

@@ -68,11 +68,15 @@ export function useMutationUpdateQuiz() {
 // 퀴즈 삭제
 export function useMutationDeleteQuiz() {
     const queryClient = useQueryClient()
+    const navigate = useNavigate();
+
 
     return useMutation({
-        mutationFn: quizApi.deleteQuiz,
+        mutationFn: (variables:number) => quizApi.deleteQuiz(variables),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: [QuizQueryKey.LIST] })
+            navigate(`/quiz/list`)
+
         },
         onError:(error)=>{
             if(error) {
