@@ -27,11 +27,11 @@ function QuizDetailForm({quizId}:{quizId:number}) {
 
     useEffect(() => {
         if(data){
-            const {title,content,multipleChoices,multipleChoiceAnswer,subjectiveAnswer,type,hint,explanation,field,lang,time,metaTitle,metaDescription,metaImageUrl,detailUrl} =data.data
+            const {title,content,multipleChoiceContents,multipleChoiceAnswer,subjectiveAnswer,type,hint,explanation,field,lang,time,metaTitle,metaDescription,metaImageUrl,detailUrl} =data.data
             setQuizForm(prev => ({...prev,
                 title,
                 content,
-                multipleChoices:multipleChoices.map(({content}) => content),
+                multipleChoiceContents:multipleChoiceContents.map(({content}) => content),
                 multipleChoiceAnswer ,
                 subjectiveAnswer,
                 type,
@@ -57,7 +57,6 @@ function QuizDetailForm({quizId}:{quizId:number}) {
             <PrimaryButton
                 type={"submit"}
                 color={"primary"}
-                onClick={updateQuiz}
             >
                 수정
             </PrimaryButton>

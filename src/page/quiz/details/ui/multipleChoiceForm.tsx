@@ -36,7 +36,7 @@ function MultipleChoiceForm({quizForm,commonHandleChange}:{
 
                 <MultipleChoiceContents
                     quizForm={quizForm}
-                    onChange={(value)=>commonHandleChange(value,"multipleChoices")}
+                    onChange={(value)=>commonHandleChange(value,"multipleChoiceContents")}
 
                 />
             {/*객관실일 경우, 나타날 필드(객관식 답안)*/}

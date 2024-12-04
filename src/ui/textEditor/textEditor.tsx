@@ -30,7 +30,7 @@ const editorRef = React.useRef<Editor|null>(null);
     }, [value]);
 
     return (
-        <div>
+        <div className={"text-left"}>
             <span className={"text-title3Normal"}>{label}</span>
             <Editor
                 initialValue={" "}

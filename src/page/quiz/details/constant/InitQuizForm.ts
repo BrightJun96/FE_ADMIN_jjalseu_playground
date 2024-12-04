@@ -1,10 +1,10 @@
 // 초기값
-import {QuizForm, QuizType} from "../../../../service/quiz/types.ts";
+import {IQuizForm, QuizType} from "../../../../service/quiz/types.ts";
 import FIELD_OPTIONS from "./FieldOptions.ts";
 import LANGUAGE_OPTIONS from "./LanguageOptions.ts";
 import TYPE_OPTIONS from "./TypeOptions.ts";
 
-const initialQuizForm:QuizForm={
+const initialQuizForm:IQuizForm={
     title:"", // 퀴즈 제목
     content:"", // 퀴즈 내용
     subjectiveAnswer:"", // 주관식 답안
@@ -17,7 +17,7 @@ const initialQuizForm:QuizForm={
     level:1,
     isMultiple:false,
     time:0,
-    multipleChoices:["","","","",""], // 객관식 선택지
+    multipleChoiceContents:["","","","",""], // 객관식 선택지
     // 메타데이터
     metaTitle:"", // 제목
     metaDescription:"", // 설명

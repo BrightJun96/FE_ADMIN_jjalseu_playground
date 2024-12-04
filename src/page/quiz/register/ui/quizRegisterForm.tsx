@@ -9,7 +9,6 @@ function QuizRegisterForm() {
    const {mutate:add}= useMutationAddQuiz()
 
     function addQuiz(){
-        console.log("등록")
         add(quizForm)
     }
 
