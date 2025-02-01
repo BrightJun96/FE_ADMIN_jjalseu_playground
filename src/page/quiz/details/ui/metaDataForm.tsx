@@ -1,4 +1,5 @@
-import {QuizFormKey} from "../../../../service/quiz/types.ts";
+import {useContext} from "react";
+import QuizFormContext from "../../../../context/quizFormContext.ts";
 import TextInput from "../../../../ui/input/textInput.tsx";
 
 
@@ -7,7 +8,6 @@ interface MetaDataFormProps {
         metaTitle:string,
         metaDescription:string,
         metaImageUrl:string
-        commonHandleChange: (value: string, key: QuizFormKey) => void;
     }
 }
 
@@ -15,7 +15,24 @@ interface MetaDataFormProps {
 function MetaDataForm({
                                 metaData,
                          }:MetaDataFormProps) {
-    const {metaTitle,metaDescription,metaImageUrl,commonHandleChange}=metaData
+    const {metaTitle,metaDescription,metaImageUrl}=metaData
+
+    const {setState}= useContext(QuizFormContext)
+
+
+
+    function handleMetaData(value:string,metaField:"seoMetaTitle"|"seoMetaDescription"|"metaImageUrl"){
+
+        setState((prev) => ({...prev,
+
+            quizMetaData:{
+                ...prev.quizMetaData,
+                [metaField]:value
+            }
+
+        }))
+
+    }
 
     return (
         <>
@@ -28,7 +45,7 @@ function MetaDataForm({
                 placeholder={"제목을 입력하세요"}
                 className={"w-full"}
                 value={metaTitle}
-                onChange={(value) => commonHandleChange(value, "metaTitle")}
+                onChange={(value) => handleMetaData(value,"seoMetaTitle")}
             />
             {/*설명*/}
             <TextInput
@@ -36,7 +53,7 @@ function MetaDataForm({
                 placeholder={"설명을 입력하세요"}
                 className={"w-full"}
                 value={metaDescription}
-                onChange={(value) => commonHandleChange(value, "metaDescription")}
+                onChange={(value) => handleMetaData(value,"seoMetaDescription")}
             />
             {/*이미지 URL*/}
             <TextInput
@@ -44,7 +61,7 @@ function MetaDataForm({
                 placeholder={"이미지 URL을 입력하세요"}
                 className={"w-full"}
                 value={metaImageUrl}
-                onChange={(value) => commonHandleChange(value, "metaImageUrl")}
+                onChange={(value) => handleMetaData(value,"metaImageUrl")}
             />
         </>
     );

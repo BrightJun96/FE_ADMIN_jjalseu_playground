@@ -1,17 +1,14 @@
-"use client";
-
-import React from "react";
 
 
 export interface CheckBoxHandlerProps{
     checked:boolean
-    value:string|number
+    value:number
 }
 
 interface CheckboxProps{
     checked:boolean;
     label:string|number;
-    value:string|number;
+    value:number;
     onChange:(value:CheckBoxHandlerProps)=>void;
 }
 
@@ -37,6 +34,6 @@ function Checkbox ({ checked, label,value, onChange }: CheckboxProps)  {
         </p>
   </label>
   );
-};
+}
 
 export default Checkbox;

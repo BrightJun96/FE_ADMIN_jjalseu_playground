@@ -1,17 +1,17 @@
+import {GetQuizSharedDtoFieldEnum} from "../../../service/generate.api.types.ts";
+import {IQuizForm} from "../../../service/quiz/types.ts";
 import TextInput from "../../../ui/input/textInput.tsx";
 import Select from "../../../ui/select/select.tsx";
 import TextEditor from "../../../ui/textEditor/textEditor.tsx";
 import FIELD_OPTIONS from "../details/constant/FieldOptions.ts";
-import LANGUAGE_OPTIONS from "../details/constant/LanguageOptions.ts";
-import LEVEL_OPTIONS from "../details/constant/LevelOptions.ts";
-import TYPE_OPTIONS from "../details/constant/TypeOptions.ts";
 import MetaDataForm from "../details/ui/metaDataForm.tsx";
 import MultipleChoiceForm from "../details/ui/multipleChoiceForm.tsx";
 import useQuizForm from "../useQuizForm.ts"
 
-function QuizForm({children,onSubmit}:{
+function QuizForm({children,onSubmit,initData}:{
     children:React.ReactNode,
-    onSubmit:()=>void
+    onSubmit:()=>void,
+    initData?:IQuizForm
 }) {
 
     const {quizForm,commonHandleChange} = useQuizForm()
@@ -34,19 +34,19 @@ function QuizForm({children,onSubmit}:{
             />
             {/*퀴즈 내용 (텍스트 에디터)*/}
             <TextEditor
-                value={quizForm.content}
+                initValue={initData?.content}
                 label={"퀴즈 내용"}
                 onHTMLChange={(value) => commonHandleChange(value, "content")}
             />
             {/*힌트 (텍스트 에디터)*/}
-            <TextEditor
-                value={quizForm.hint}
-                label={"힌트"}
-                onHTMLChange={(value) => commonHandleChange(value, "hint")}
-            />
+            {/*<TextEditor*/}
+            {/*    initValue={initData?.hint}*/}
+            {/*    label={"힌트"}*/}
+            {/*    onHTMLChange={(value) => commonHandleChange(value, "hint")}*/}
+            {/*/>*/}
             {/*해설 (텍스트 에디터)*/}
             <TextEditor
-                value={quizForm.explanation}
+                initValue={initData?.explanation}
                 label={"해설"}
                 onHTMLChange={(value) => commonHandleChange(value, "explanation")}
             />
@@ -54,27 +54,27 @@ function QuizForm({children,onSubmit}:{
             <Select
                 options={FIELD_OPTIONS}
                 label={"분야"}
-                handleOptionChange={(value) => commonHandleChange(value, "field")}
+                handleOptionChange={(value) => commonHandleChange(value as GetQuizSharedDtoFieldEnum, "field")}
             />
             {/*언어*/}
-            <Select
-                options={LANGUAGE_OPTIONS}
-                label={"언어"}
-                handleOptionChange={(value) => commonHandleChange(value, "lang")}
-            />
+            {/*<Select*/}
+            {/*    options={LANGUAGE_OPTIONS}*/}
+            {/*    label={"언어"}*/}
+            {/*    handleOptionChange={(value) => commonHandleChange(value, "lang")}*/}
+            {/*/>*/}
             {/*문제 난이도*/}
-            <Select
-                options={LEVEL_OPTIONS}
-                label={"문제 난이도"}
-                handleOptionChange={(value) => commonHandleChange(value, "level")}
-            />
+            {/*<Select*/}
+            {/*    options={LEVEL_OPTIONS}*/}
+            {/*    label={"문제 난이도"}*/}
+            {/*    handleOptionChange={(value) => commonHandleChange(value, "level")}*/}
+            {/*/>*/}
             {/*문제 타입(객관식 or 주관식)*/}
-            <Select
-                options={TYPE_OPTIONS}
-                label={"문제타입"}
-                handleOptionChange={(value) => commonHandleChange(value, "type")}
+            {/*<Select*/}
+            {/*    options={TYPE_OPTIONS}*/}
+            {/*    label={"문제타입"}*/}
+            {/*    handleOptionChange={(value) => commonHandleChange(value, "type")}*/}
 
-            />
+            {/*/>*/}
             {/*상세 URL*/}
             <TextInput
                 value={quizForm.detailUrl}
@@ -85,26 +85,23 @@ function QuizForm({children,onSubmit}:{
             />
 
             {/*문제풀이 소요시간*/}
-            <TextInput
-                value={quizForm.time}
-                type={"number"}
-                label={"문제풀이 소요시간(초)"}
-                className={"w-full"}
-                placeholder={"문제풀이 소요시간을 입력해주세요."}
-                onChange={(value)=>commonHandleChange(value,"time")}
-            />
+            {/*<TextInput*/}
+            {/*    value={quizForm.time}*/}
+            {/*    type={"number"}*/}
+            {/*    label={"문제풀이 소요시간(초)"}*/}
+            {/*    className={"w-full"}*/}
+            {/*    placeholder={"문제풀이 소요시간을 입력해주세요."}*/}
+            {/*    onChange={(value)=>commonHandleChange(value,"time")}*/}
+            {/*/>*/}
             {/*객관식 폼*/}
-            {quizForm.type === "MULTIPLE_CHOICE" &&
                 <MultipleChoiceForm quizForm={quizForm} commonHandleChange={commonHandleChange}/>
-            }
 
             {/*메타데이터 섹션(제목,설명,이미지 URL)*/}
             <MetaDataForm
                 metaData={{
-                    metaTitle: quizForm.metaTitle,
-                    metaDescription: quizForm.metaDescription,
-                    metaImageUrl: quizForm.metaImageUrl,
-                    commonHandleChange
+                    metaTitle: quizForm.quizMetaData.seoMetaTitle,
+                    metaDescription: quizForm.quizMetaData.seoMetaDescription,
+                    metaImageUrl: quizForm.quizMetaData.metaImageUrl??"",
                 }}
             />
             {children}

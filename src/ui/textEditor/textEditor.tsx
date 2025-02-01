@@ -13,21 +13,22 @@ import React, {useEffect} from 'react';
 export interface TextEditorProps {
     label:string
     onHTMLChange?:(value:string)=>void,
-    value:string
+    initValue?:string
 }
 
-const TextEditor = ({label,onHTMLChange,value}:TextEditorProps) => {
+const TextEditor = ({label,onHTMLChange,initValue}:TextEditorProps) => {
 
 const editorRef = React.useRef<Editor|null>(null);
 
 
     useEffect(() => {
 
-        if(value) {
-            editorRef.current?.getInstance().setHTML(value)
+        if(initValue) {
+
+            editorRef.current?.getInstance().setHTML(initValue)
         }
 
-    }, [value]);
+    }, [initValue]);
 
     return (
         <div className={"text-left"}>

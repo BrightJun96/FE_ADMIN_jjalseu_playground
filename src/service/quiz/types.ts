@@ -1,4 +1,7 @@
 // 퀴즈 목록 요청 타입
+
+import {GetQuizMetaDataSharedDto, GetQuizMultipleChoiceSharedDto} from "../generate.api.types.ts";
+
 export interface QuizListRequest extends Record<string, string> {
   field: string;
   lang: string;
@@ -14,6 +17,8 @@ export interface MultipleChoiceContent{
 
 // 퀴즈 종류 타입
 export type QuizType = "MULTIPLE_CHOICE" | "SUBJECTIVE";
+
+
 
 // 퀴즈 응답 타입
 export interface QuizItem {
@@ -43,21 +48,12 @@ export interface QuizItem {
 export interface IQuizForm{
     title:string, // 퀴즈 제목
     content:string, // 퀴즈 내용
-    subjectiveAnswer:string, // 주관식 답안
-    multipleChoiceAnswer:number[], // 객관식 답안
-    hint:string,// 힌트
     explanation:string,// 해설
-    type:QuizType,// 퀴즈 종류
     field:string,// 분야
-    lang:string, // 언어
-    level:number, // 난이도
-    isMultiple:boolean,// 객관식일 경우 중복 선택 여부
-    time:number, // 시간
-    multipleChoiceContents:string[] //객관식 컨텐츠
-    metaTitle:string, // 제목
-    metaDescription:string, // 설명
-    metaImageUrl:string // 이미지 URL
+    multipleChoiceContents:GetQuizMultipleChoiceSharedDto[] //객관식 컨텐츠
     detailUrl:string // 상세 URL
+    answer:number // 정답
+    quizMetaData:Omit<GetQuizMetaDataSharedDto,"id">
 }
 
 

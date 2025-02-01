@@ -2,6 +2,7 @@
 
 
 import {useEffect} from "react";
+import {GetQuizMultipleChoiceSharedDto} from "../../../../service/generate.api.types.ts";
 import {IQuizForm} from "../../../../service/quiz/types.ts";
 // 객관식 문제 컨텐츠
 import TextInput from "../../../../ui/input/textInput.tsx";
@@ -10,7 +11,7 @@ const MultipleChoiceContents = ({
                                     onChange,
                                     quizForm
 }:{
-    onChange:(value:string[])=>void,
+    onChange:(value:GetQuizMultipleChoiceSharedDto[])=>void,
     quizForm :IQuizForm
 }) => {
 
@@ -20,7 +21,10 @@ const MultipleChoiceContents = ({
 
 
 
-        onChange(quizForm.multipleChoiceContents.map((v,i)=>i===index?value:v))
+        onChange(quizForm.multipleChoiceContents.map((v)=>v.id===index?{
+            content:value,
+            id:index
+        }:v))
 
     }
 
@@ -38,12 +42,12 @@ const MultipleChoiceContents = ({
                     quizForm.multipleChoiceContents
                         .map((v,i)=>
                             <TextInput
-                                key={i}
+                                key={v.id}
                                 label={`${i+1}번`}
                                 className={"w-full"}
                                 placeholder={"문제안을 입력해주세요."}
-                                value={v}
-                                onChange={(value)=>handleChoiceContentChange(value,i)}
+                                value={v.content}
+                                onChange={(value)=>handleChoiceContentChange(value,v.id)}
                             />
                         )
                 }

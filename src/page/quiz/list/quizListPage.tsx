@@ -13,7 +13,7 @@ function QuizListPage() {
     const navigate = useNavigate()
 
     function handleCellClick(params:CellClickArgs<TableRow>){
-        navigate(`/quiz/${params.row.quizId}`)
+        navigate(`/quiz/${params.row.id}`)
     }
 
     return (
@@ -24,7 +24,7 @@ function QuizListPage() {
             </PrimaryButton>
             <CustomTable
                 columns={quizListTableColumn}
-                rows={quizList?.data?.quizList??[]}
+                rows={quizList?.data?.data??[]}
                 handleCellClick={handleCellClick}
 
             />
