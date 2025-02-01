@@ -9,6 +9,7 @@ function QuizRegisterForm() {
    const {quizForm} =  useQuizForm()
    const {mutate:add}= useMutationAddQuiz()
 
+    console.log("quizForm :",quizForm)
     function addQuiz(){
 
        const createField:CreateQuizRequestDto = {
