@@ -1,8 +1,8 @@
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 import {useNavigate} from "react-router-dom";
+import {CreateQuizRequestDto, UpdateQuizRequestDto} from "../generate.api.types.ts";
 import QuizQueryKey from "./query.key.ts";
 import quizApi from "./QuizApi.ts";
-import {IQuizForm} from "./types.ts";
 
 // 퀴즈 목록 조회
 export function useQueryQuizList() {
@@ -27,7 +27,7 @@ export function useMutationAddQuiz() {
     const navigate = useNavigate();
 
     return useMutation({
-        mutationFn: (variables:IQuizForm) =>  quizApi.addQuiz(variables),
+        mutationFn: (variables:CreateQuizRequestDto) =>  quizApi.addQuiz(variables),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: [QuizQueryKey.LIST] })
             navigate(`/quiz/list`)
@@ -49,7 +49,7 @@ export function useMutationUpdateQuiz() {
     return useMutation({
         mutationFn: (variables:{
             id:number,
-            request:IQuizForm
+            request:UpdateQuizRequestDto
         })=>quizApi.updateQuiz(variables.id,variables.request),
         onSuccess: (_,variables) => {
             queryClient.invalidateQueries({ queryKey: [QuizQueryKey.LIST] })

@@ -11,10 +11,6 @@ import {TableColumn} from "../../../../ui/table/customTable.tsx";
         name:"분야"
     },
     {
-        key:"lang",
-        name:"언어"
-    },
-    {
         key:"createdAt",
         name:"생성일"
     },

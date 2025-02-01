@@ -1,4 +1,5 @@
 import {useEffect} from "react";
+import {UpdateQuizRequestDto, UpdateQuizRequestDtoFieldEnum} from "../../../../service/generate.api.types.ts";
 import {useMutationDeleteQuiz, useMutationUpdateQuiz, useQueryQuizDetail} from "../../../../service/quiz/query.ts";
 import PrimaryButton from "../../../../ui/button/primaryButton.tsx";
 import QuizForm from "../../ui/quizForm.tsx";
@@ -8,14 +9,27 @@ import useQuizForm from "../../useQuizForm.ts"
 function QuizDetailForm({quizId}:{quizId:number}) {
 
     const {data} = useQueryQuizDetail(quizId)
-    const {setQuizForm,quizForm} = useQuizForm()
+
+    const {setQuizForm,quizForm,initData,setInitData} = useQuizForm()
     const {mutate:update}= useMutationUpdateQuiz()
     const {mutate:remove}= useMutationDeleteQuiz()
 
     // 퀴즈 수정
     function updateQuiz(){
 
-        update({id:quizId,request:quizForm})
+
+        const updateField:UpdateQuizRequestDto = {
+            title:quizForm.title,
+            content:quizForm.content,
+            explanation :quizForm.explanation,
+            detailUrl:quizForm.detailUrl,
+            field: quizForm.field as UpdateQuizRequestDtoFieldEnum,
+            answer: quizForm.answer,
+            quizMetaData: { seoMetaTitle:quizForm.quizMetaData.seoMetaTitle,seoMetaDescription:quizForm.quizMetaData.seoMetaDescription,metaImageUrl: quizForm.quizMetaData.metaImageUrl},
+            multipleChoices:quizForm.multipleChoiceContents
+        }
+
+        update({id:quizId,request:updateField})
     }
 
     // 퀴즈 삭제
@@ -27,24 +41,23 @@ function QuizDetailForm({quizId}:{quizId:number}) {
 
     useEffect(() => {
         if(data){
-            const {title,content,multipleChoices,multipleChoiceAnswer,subjectiveAnswer,type,hint,explanation,field,lang,time,metaTitle,metaDescription,metaImageUrl,detailUrl} =data.data
-            setQuizForm(prev => ({...prev,
+            const {title,content,explanation,field,detailUrl,multipleChoices,quizMetaData,answer} =data.data
+
+            const detailsData ={
                 title,
                 content,
-                multipleChoices:multipleChoices.map(({content}) => content),
-                multipleChoiceAnswer ,
-                subjectiveAnswer,
-                type,
-                hint,
+                multipleChoiceContents:multipleChoices,
                 explanation,
                 field,
-                lang,
-                time,
-                metaTitle,
-                metaDescription,
-                metaImageUrl:metaImageUrl??"",
-                detailUrl
+                detailUrl,
+                quizMetaData,
+                answer
+            }
+            setQuizForm(prev => ({...prev,
+             ...detailsData
             }))
+
+            setInitData((prev) => ({...prev,...detailsData}))
         }
     }, [data]);
 
@@ -52,12 +65,12 @@ function QuizDetailForm({quizId}:{quizId:number}) {
 
     return (
         <QuizForm
+            initData={initData}
             onSubmit={updateQuiz}
         >
             <PrimaryButton
                 type={"submit"}
                 color={"primary"}
-                onClick={updateQuiz}
             >
                 수정
             </PrimaryButton>
