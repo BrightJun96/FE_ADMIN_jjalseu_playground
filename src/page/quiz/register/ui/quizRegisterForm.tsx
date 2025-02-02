@@ -1,5 +1,5 @@
 import {CreateQuizRequestDto, CreateQuizRequestDtoFieldEnum} from "../../../../service/generate.api.types.ts";
-import {useMutationAddQuiz} from "../../../../service/quiz/query.ts";
+import {useMutationAddQuiz} from "../../../../service/quiz/quiz.query.ts";
 import PrimaryButton from "../../../../ui/button/primaryButton.tsx";
 import QuizForm from "../../ui/quizForm.tsx";
 import useQuizForm from "../../useQuizForm.ts"

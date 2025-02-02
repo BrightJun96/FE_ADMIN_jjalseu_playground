@@ -43,7 +43,6 @@ function handleHtml(){
         <div className={"text-left"}>
             <span className={"text-title3Normal"}>{label}</span>
             <Editor
-
                 height={"1000px"}
                 initialValue={" "}
                 onChange={handleHtml}

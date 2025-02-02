@@ -25,9 +25,7 @@ function QuizDetailsPage() {
                 <Title>
                     퀴즈 상세
                 </Title>
-            {/*
-            @todo id가 string으로 들어오면 에러나니 처리 ㄱㄱ
-            */}
+
             <QuizFormProvider>
                 {id && <QuizDetailForm quizId={Number(id)}/>}
             </QuizFormProvider>

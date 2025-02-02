@@ -1,6 +1,6 @@
 import {CellClickArgs} from "react-data-grid";
 import {useNavigate} from "react-router-dom";
-import {useQueryQuizList} from "../../../service/quiz/query.ts";
+import {useQueryQuizList} from "../../../service/quiz/quiz.query.ts";
 import PrimaryButton from "../../../ui/button/primaryButton.tsx";
 import CustomTable, {TableRow} from "../../../ui/table/customTable.tsx";
 import Title from "../../../ui/title/Title.tsx";
