@@ -1,6 +1,6 @@
 import {useEffect} from "react";
 import {UpdateQuizRequestDto, UpdateQuizRequestDtoFieldEnum} from "../../../../service/generate.api.types.ts";
-import {useMutationDeleteQuiz, useMutationUpdateQuiz, useQueryQuizDetail} from "../../../../service/quiz/query.ts";
+import {useMutationDeleteQuiz, useMutationUpdateQuiz, useQueryQuizDetail} from "../../../../service/quiz/quiz.query.ts";
 import PrimaryButton from "../../../../ui/button/primaryButton.tsx";
 import QuizForm from "../../ui/quizForm.tsx";
 import useQuizForm from "../../useQuizForm.ts"

@@ -21,6 +21,15 @@ const TextEditor = ({label,onHTMLChange,initValue}:TextEditorProps) => {
 const editorRef = React.useRef<Editor|null>(null);
 
 
+function handleHtml(){
+    const   html:string =editorRef.current?.getInstance().getHTML()
+
+    if(editorRef.current&&onHTMLChange) {
+        onHTMLChange(html)
+
+    }
+}
+
     useEffect(() => {
 
         if(initValue) {
@@ -34,16 +43,9 @@ const editorRef = React.useRef<Editor|null>(null);
         <div className={"text-left"}>
             <span className={"text-title3Normal"}>{label}</span>
             <Editor
+                height={"1000px"}
                 initialValue={" "}
-                onChange={() => {
-                   const   html:string =editorRef.current?.getInstance().getHTML()
-
-                    if(editorRef.current&&onHTMLChange) {
-                        onHTMLChange(html)
-
-                    }
-
-                }}
+                onChange={handleHtml}
                 ref={editorRef}
                 useCommandShortcut={true}
                 plugins={[[codeSyntaxHighlight,{ highlighter: Prism }]]}

@@ -1,13 +1,13 @@
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 import {useNavigate} from "react-router-dom";
 import {CreateQuizRequestDto, UpdateQuizRequestDto} from "../generate.api.types.ts";
-import QuizQueryKey from "./query.key.ts";
+import QueryKey from "../query.key.ts";
 import quizApi from "./QuizApi.ts";
 
 // 퀴즈 목록 조회
 export function useQueryQuizList() {
     return useQuery({
-        queryKey:[ QuizQueryKey.LIST],
+        queryKey:[ QueryKey.Quiz.LIST],
         queryFn: () => quizApi.getQuizList(),
     })
 }
@@ -16,7 +16,7 @@ export function useQueryQuizList() {
 // 퀴즈 상세 조회
 export function useQueryQuizDetail(id:number) {
     return useQuery({
-        queryKey:[ QuizQueryKey.DETAIL, id],
+        queryKey:[ QueryKey.Quiz.DETAIL, id],
         queryFn: () => quizApi.getQuizDetail(id),
     })
 }
@@ -29,7 +29,7 @@ export function useMutationAddQuiz() {
     return useMutation({
         mutationFn: (variables:CreateQuizRequestDto) =>  quizApi.addQuiz(variables),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: [QuizQueryKey.LIST] })
+            queryClient.invalidateQueries({ queryKey: [QueryKey.Quiz.LIST] })
             navigate(`/quiz/list`)
 
         },
@@ -52,8 +52,8 @@ export function useMutationUpdateQuiz() {
             request:UpdateQuizRequestDto
         })=>quizApi.updateQuiz(variables.id,variables.request),
         onSuccess: (_,variables) => {
-            queryClient.invalidateQueries({ queryKey: [QuizQueryKey.LIST] })
-            queryClient.invalidateQueries({ queryKey: [QuizQueryKey.DETAIL,variables.id] })
+            queryClient.invalidateQueries({ queryKey: [QueryKey.Quiz.LIST] })
+            queryClient.invalidateQueries({ queryKey: [QueryKey.Quiz.DETAIL,variables.id] })
             navigate(`/quiz/list`)
         },
         onError:(error) =>{
@@ -74,7 +74,7 @@ export function useMutationDeleteQuiz() {
     return useMutation({
         mutationFn: (variables:number) => quizApi.deleteQuiz(variables),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: [QuizQueryKey.LIST] })
+            queryClient.invalidateQueries({ queryKey: [QueryKey.Quiz.LIST] })
             navigate(`/quiz/list`)
 
         },

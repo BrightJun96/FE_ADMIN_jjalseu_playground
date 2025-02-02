@@ -1,0 +1,22 @@
+export const ConceptListTableColumnConstant =[
+    {
+        key:"title",
+        name:"제목"
+    },
+    {
+        key:"field",
+        name:"분야"
+    },
+    {
+        key:"tech",
+        name:"기술"
+    },
+    {
+        key:"createdAt",
+        name:"생성일"
+    },
+    {
+        key:"updatedAt",
+        name:"수정일"
+    }
+]
