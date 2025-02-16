@@ -17,7 +17,7 @@ import LANGUAGE_OPTIONS from "../../../quiz/details/constant/LanguageOptions.ts"
 export type Concept = CreateConceptRequestDto
 export type ConceptKey = keyof Concept
 type MetaKey = keyof CreateMetadataSharedDto
-function ConceptRegisterForm(props) {
+function ConceptRegisterForm() {
 
     const initForm:Concept = {
         title:"",

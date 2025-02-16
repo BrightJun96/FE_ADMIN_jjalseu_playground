@@ -1,6 +1,6 @@
 import React from 'react';
 
-function MetaForm(props) {
+function MetaForm() {
     return (
     <></>
     );

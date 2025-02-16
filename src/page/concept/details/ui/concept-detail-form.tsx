@@ -64,7 +64,11 @@ function ConceptDetailForm({
             request:{
                 title: conceptForm.title,
                 content: conceptForm.content,
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-expect-error
                 field: conceptForm.field,
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-expect-error 
                 tech: conceptForm.tech,
                 detailUrl: conceptForm.detailUrl,
                 metaData: {
@@ -94,8 +98,12 @@ function ConceptDetailForm({
             setConceptForm({
                 title,
                 content,
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-expect-error
                 tech ,
                 detailUrl,
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-expect-error
                 field,
                 metaData:conceptMeta
 
