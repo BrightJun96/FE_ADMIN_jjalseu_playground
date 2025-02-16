@@ -9,53 +9,51 @@ import QuizRegisterPage from "../page/quiz/register/quizRegisterPage.tsx";
 
 const router = createBrowserRouter([
     {
-
+        path:"/",
+        element:<LoginPage/>,
+    },
+    // 퀴즈
+    {
+        path:"quiz",
         children:[
-            // 퀴즈
             {
-                path:"quiz",
-                children:[
-                    {
-                        path:"list",
-                        element:<QuizListPage/>
-                    },
-                    {
-                        path:":id",
-                        element:<QuizDetailsPage/>
-                    },
-                    {
-                        path:"register",
-                        element:<QuizRegisterPage/>
-                    }
-                ]
+                path:"list",
+                element:<QuizListPage/>
             },
-            // 개념
             {
-                path:"concept",
-                children:[
-                    {path: "list",element: <ConceptListPage/>},
-                    {path:":id",element: <ConceptDetailsPage/>},
-                    {
-                        path:"register", element: <ConceptRegisterPage/>
-                    }
-                ]
-
-
+                path:":id",
+                element:<QuizDetailsPage/>
             },
-
-            // 인증
             {
-                path:"auth",
-                children:[
-                    // 로그인
-                    {
-                    path:"login",
-                    element:<LoginPage/>
-                }]
+                path:"register",
+                element:<QuizRegisterPage/>
             }
-        ],
+        ]
+    },
+    // 개념
+    {
+        path:"concept",
+        children:[
+            {path: "list",element: <ConceptListPage/>},
+            {path:":id",element: <ConceptDetailsPage/>},
+            {
+                path:"register", element: <ConceptRegisterPage/>
+            }
+        ]
+
 
     },
+
+    // 인증
+    {
+        path:"auth",
+        children:[
+            // 로그인
+            {
+                path:"login",
+                element:<LoginPage/>
+            }]
+    }
 ]);
 
 export default router;
