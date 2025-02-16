@@ -1,4 +1,5 @@
 import {createBrowserRouter} from "react-router-dom";
+import {authenticate} from "../helper/authenticate.ts";
 import ConceptDetailsPage from "../page/concept/details/concept-details-page.tsx";
 import ConceptListPage from "../page/concept/list/conceptListPage.tsx";
 import ConceptRegisterPage from "../page/concept/register/concept-register-page.tsx";
@@ -11,6 +12,7 @@ const router = createBrowserRouter([
     {
         path:"/",
         element:<LoginPage/>,
+        loader:authenticate.notAuthPageCheck
     },
     // 퀴즈
     {
@@ -18,15 +20,18 @@ const router = createBrowserRouter([
         children:[
             {
                 path:"list",
-                element:<QuizListPage/>
+                element:<QuizListPage/>,
+                loader:authenticate.authPageCheck
             },
             {
                 path:":id",
-                element:<QuizDetailsPage/>
+                element:<QuizDetailsPage/>,
+                loader:authenticate.authPageCheck
             },
             {
                 path:"register",
-                element:<QuizRegisterPage/>
+                element:<QuizRegisterPage/>,
+                loader:authenticate.authPageCheck
             }
         ]
     },
@@ -34,10 +39,16 @@ const router = createBrowserRouter([
     {
         path:"concept",
         children:[
-            {path: "list",element: <ConceptListPage/>},
-            {path:":id",element: <ConceptDetailsPage/>},
+            {path: "list",element: <ConceptListPage/>,
+                loader:authenticate.authPageCheck
+            },
+            {path:":id",element: <ConceptDetailsPage/>,
+                loader:authenticate.authPageCheck
+            },
             {
-                path:"register", element: <ConceptRegisterPage/>
+                path:"register", element: <ConceptRegisterPage/>,
+                loader:authenticate.authPageCheck
+
             }
         ]
 

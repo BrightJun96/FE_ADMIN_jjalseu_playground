@@ -26,10 +26,7 @@ abstract class BaseApi{
             const accessToken = this.getAuthToken("access")
             const refreshToken  = this.getAuthToken("refresh")
 
-            if(!accessToken || !refreshToken) {
-                window.location.href="/"
 
-            }
 
             if(accessToken){
 

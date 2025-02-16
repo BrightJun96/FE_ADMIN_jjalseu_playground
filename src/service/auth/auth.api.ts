@@ -42,7 +42,9 @@ class AuthApi extends BaseApi{
             },)
         }
         catch (e) {
+            console.log( "login Error",e )
             alert("잘못된 계정정보입니다. 관리자에게 승인요청하세요.")
+            return
 
         }
 
