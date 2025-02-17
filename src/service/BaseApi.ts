@@ -113,7 +113,6 @@ abstract class BaseApi{
                 }
             })
 
-            console.log("response :",response)
 
             const reissueResponse: IResponse<ReissueACTResponse> =await response.json()
             this.cookies.set("access_token",reissueResponse.data.accessToken)
