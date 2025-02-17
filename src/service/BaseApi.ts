@@ -1,5 +1,6 @@
+import {jwtDecode} from "jwt-decode";
 import {Cookies} from "react-cookie";
-import {ReissueACTResponse} from "./auth/auth.api.ts";
+import {ReissueACTResponse, Token} from "./auth/auth.api.ts";
 import {CustomRequestInit, IResponse, QueryString} from "./network.types.ts";
 
 abstract class BaseApi{
@@ -115,7 +116,16 @@ abstract class BaseApi{
 
 
             const reissueResponse: IResponse<ReissueACTResponse> =await response.json()
-            this.cookies.set("access_token",reissueResponse.data.accessToken)
+
+            const accessToken = reissueResponse.data.accessToken
+            const decodeACT = jwtDecode<Token>(accessToken)
+
+            this.cookies.set("access_token",accessToken,{
+                path:"/",
+                secure:true,
+                sameSite: "strict",
+                expires:new Date(decodeACT.exp*1000)
+            })
 
         }catch (e) {
             window.location.href="/"

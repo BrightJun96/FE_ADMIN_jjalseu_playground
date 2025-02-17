@@ -1,3 +1,4 @@
+import {jwtDecode} from "jwt-decode";
 import BaseApi from "../BaseApi.ts";
 import {IResponse} from "../network.types.ts";
 
@@ -15,6 +16,13 @@ export interface ReissueACTResponse{
     accessToken:string
 }
 
+export interface Token {
+    exp:number
+    iat:number
+    role:number
+    sub:number
+    type :"access" | "refresh"
+}
 
 function encodeBase64 (text:string)  {
     const encoder = new TextEncoder();
@@ -39,12 +47,39 @@ class AuthApi extends BaseApi{
 
 
         try {
-            return await this.request<LoginResponse>("auth/login", {
+            const response =  await this.request<LoginResponse>("auth/login", {
                 method: "POST",
                 headers: {
                     Authorization: BasicToken,
                 },
             },)
+
+            const {
+                accessToken,
+                refreshToken
+            } =response.data
+
+            const decodeACT = jwtDecode<Token>(accessToken)
+            const decodeRFT = jwtDecode<Token>(refreshToken)
+
+            this.cookies.set("access_token",accessToken,{
+                path:"/",
+                secure:true,
+                sameSite: "strict",
+                expires:new Date(decodeACT.exp*1000)
+            })
+
+            this.cookies.set("refresh_token",refreshToken,
+                {
+                    path:"/",
+                    secure:true,
+                    sameSite: "strict",
+                    expires: new Date(decodeRFT.exp*1000)
+                }
+                )
+
+            return response
+
         }
         catch (e) {
             console.log( "login Error",e )
@@ -55,14 +90,14 @@ class AuthApi extends BaseApi{
 
     }
 
-    async reissueACT(): Promise<IResponse<ReissueACTResponse>>{
-        return await this.request<ReissueACTResponse>("reissue-accessToken",{
-            method:"POST",
-            headers:{
-                Authorization :`Bearer ${this.cookies.get("refresh_token")}`
-            }
-        })
-    }
+    // async reissueACT(): Promise<IResponse<ReissueACTResponse>>{
+    //     return await this.request<ReissueACTResponse>("reissue-accessToken",{
+    //         method:"POST",
+    //         headers:{
+    //             Authorization :`Bearer ${this.cookies.get("refresh_token")}`
+    //         }
+    //     })
+    // }
 
 
 

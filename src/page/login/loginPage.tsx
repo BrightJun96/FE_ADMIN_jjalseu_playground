@@ -46,8 +46,6 @@ function LoginPage() {
             return
         }
 
-        setActCookie("access_token", response?.data.accessToken, { path: "/", secure: true, sameSite: "lax" });
-        setRftCookie("refresh_token", response?.data.refreshToken, { path: "/", secure: true, sameSite: "lax" })
 
         navigate("/concept/list")
 
