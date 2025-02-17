@@ -1,4 +1,5 @@
 import {Cookies} from "react-cookie";
+import {ReissueACTResponse} from "./auth/auth.api.ts";
 import {CustomRequestInit, IResponse, QueryString} from "./network.types.ts";
 
 abstract class BaseApi{
@@ -34,12 +35,6 @@ abstract class BaseApi{
 
             }
 
-            if(refreshToken){
-
-                // await authAPI.reissueACT()
-
-
-            }
 
 
 
@@ -57,10 +52,18 @@ abstract class BaseApi{
 
 
 
-
             if(response.status===401){
 
-                window.location.href="/"
+                // refreshToken이 있다면 refreshToken을 통해 accessToken 재발급
+                if(refreshToken){
+
+                    await this.reissueACT()
+
+                }else{
+                    window.location.href="/"
+                }
+
+
 
             }
 
@@ -99,6 +102,25 @@ abstract class BaseApi{
 
     private getAuthToken(tokenType:"access"|"refresh") : string|undefined{
         return tokenType==="access"? this.cookies.get("access_token"):this.cookies.get("refresh_token")
+    }
+
+    private async reissueACT(){
+        try {
+            const response = await fetch(`${import.meta.env.VITE_API_ENDPOINT}/auth/reissue-accessToken`, {
+                method: "POST",
+                headers: {
+                    Authorization: `Bearer ${this.cookies.get("refresh_token")}`
+                }
+            })
+
+
+            const reissueResponse: IResponse<ReissueACTResponse> =await response.json()
+            this.cookies.set("access_token",reissueResponse.data.accessToken)
+
+        }catch (e) {
+            window.location.href="/"
+
+        }
     }
 
 
