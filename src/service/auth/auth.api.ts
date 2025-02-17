@@ -11,6 +11,10 @@ export interface LoginResponse {
     refreshToken:string
 }
 
+export interface ReissueACTResponse{
+    accessToken:string
+}
+
 
 function encodeBase64 (text:string)  {
     const encoder = new TextEncoder();
@@ -33,6 +37,7 @@ class AuthApi extends BaseApi{
 
         const BasicToken = `Basic ${toBase64}`;
 
+
         try {
             return await this.request<LoginResponse>("auth/login", {
                 method: "POST",
@@ -48,26 +53,18 @@ class AuthApi extends BaseApi{
 
         }
 
-
-
-
     }
 
-    async reissueACT(){
-
-
-        await this.request("reissue-accessToken",{
+    async reissueACT(): Promise<IResponse<ReissueACTResponse>>{
+        return await this.request<ReissueACTResponse>("reissue-accessToken",{
             method:"POST",
             headers:{
-                Authorization :""
+                Authorization :`Bearer ${this.cookies.get("refresh_token")}`
             }
         })
     }
 
-    private getRctToken(){
 
-        return this.cookies.get("refresh_token")
-    }
 
 }
 
