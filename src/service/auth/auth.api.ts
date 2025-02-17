@@ -55,14 +55,14 @@ class AuthApi extends BaseApi{
 
     }
 
-    async reissueACT(): Promise<IResponse<ReissueACTResponse>>{
-        return await this.request<ReissueACTResponse>("reissue-accessToken",{
-            method:"POST",
-            headers:{
-                Authorization :`Bearer ${this.cookies.get("refresh_token")}`
-            }
-        })
-    }
+    // async reissueACT(): Promise<IResponse<ReissueACTResponse>>{
+    //     return await this.request<ReissueACTResponse>("reissue-accessToken",{
+    //         method:"POST",
+    //         headers:{
+    //             Authorization :`Bearer ${this.cookies.get("refresh_token")}`
+    //         }
+    //     })
+    // }
 
 
 
