@@ -3,7 +3,7 @@ import Title from "../../../ui/title/Title.tsx";
 import ConceptRegisterForm from "./ui/concept-register-form.tsx";
 
 // 개념 등록 페이지
-function ConceptRegisterPage(props) {
+function ConceptRegisterPage() {
     return (
         <div className={"w-full"}>
             <Title>개념 등록</Title>

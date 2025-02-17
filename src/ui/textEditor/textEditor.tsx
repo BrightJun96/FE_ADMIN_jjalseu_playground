@@ -19,25 +19,30 @@ export interface TextEditorProps {
 const TextEditor = ({label,onHTMLChange,initValue}:TextEditorProps) => {
 
 const editorRef = React.useRef<Editor|null>(null);
+    const [htmlContent, setHtmlContent] = React.useState<string>(initValue || "");
 
 
-function handleHtml(){
-    const   html:string =editorRef.current?.getInstance().getHTML()
+    function handleHtml() {
+        if (editorRef.current) {
+            const newHtml = editorRef.current.getInstance().getHTML();
 
-    if(editorRef.current&&onHTMLChange) {
-        onHTMLChange(html)
-
+            // 변경된 경우에만 상태 업데이트
+            if (newHtml !== htmlContent) {
+                setHtmlContent(newHtml);
+                if(onHTMLChange) {
+                    onHTMLChange(newHtml);
+                }
+            }
+        }
     }
-}
 
     useEffect(() => {
-
-        if(initValue) {
-
-            editorRef.current?.getInstance().setHTML(initValue)
+        if (initValue && initValue !== htmlContent) {
+            editorRef.current?.getInstance().setHTML(initValue);
+            setHtmlContent(initValue);
         }
-
     }, [initValue]);
+
 
     return (
         <div className={"text-left"}>

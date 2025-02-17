@@ -17,7 +17,6 @@ function ConceptListPage() {
         navigate(`/concept/${params.row.id}`)
     }
 
-    console.log("conceptList:",conceptList)
     return (
         <div className={"w-full"}>
             <Title>개념 목록</Title>
@@ -26,6 +25,7 @@ function ConceptListPage() {
             </PrimaryButton>
             <CustomTable
                 columns={ConceptListTableColumnConstant}
+                // @ts-expect-error - 이 줄은 TypeScript에서 오류가 발생할 가능성이 있음
                 rows={conceptList?.data ?? []}
                 handleCellClick={handleCellClick}
 

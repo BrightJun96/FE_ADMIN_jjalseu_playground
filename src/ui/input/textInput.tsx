@@ -46,7 +46,7 @@ const TextInput = ({
     <div className={`flex items-center gap-[24px] sm:flex-col sm:gap-[12px] md:gap-[12px] ${className}`}>
       {/*라벨*/}
       <label
-        className={`w-full whitespace-nowrap text-title3Normal text-black sm:text-menu md:text-menu min-w-[160px] ${labelClassName}`}
+        className={`w-full text-left whitespace-nowrap text-title3Normal text-black sm:text-menu md:text-menu min-w-[160px] ${labelClassName}`}
       >
         {label}
       </label>
